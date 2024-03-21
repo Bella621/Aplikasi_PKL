@@ -41,6 +41,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/angsuran/{id}', [AngsuranController::class, 'destroy'])->name('angsuran.destroy');
     Route::post('/angsuran/store', [App\Http\Controllers\AngsuranController::class, 'store'])->name('angsuran.store');
     Route::get('/laporan', [App\Http\Controllers\LaporanController::class, 'index'])->name('laporan');
+    Route::post('/laporan/print', [App\Http\Controllers\LaporanController::class, 'printIndex'])->name('laporan.printIndex');
     Route::get('/laporan/total_angsuran', [App\Http\Controllers\LaporanController::class, 'total_angsuran'])->name('laporan.total_angsuran');
     Route::get('/logout', function(){
         \Auth::logout();

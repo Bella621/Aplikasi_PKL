@@ -12,9 +12,10 @@
         <div class="mb-3">
         <label for="nama" class="form-label">Nama</label>
         <select class="form-select" aria-label="Default select example" name="nama_id" id="nama_id">
-            @foreach($pinjaman as $a)
+            <option value="" disabled selected>Pilih Nama Pelanggan</option> <!-- Teks default -->
+        @foreach($pinjaman as $a)
             <option value="{{ $a['id'] }}" data-total="{{ $a['total'] }}">{{ $a['nama'] }}</option>
-            @endforeach
+        @endforeach
         </select>
         </div>
         <div class="mb-3">
@@ -41,15 +42,33 @@
 @section('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Mengambil elemen select
+        // Mengambil elemen input tanggal
+        var inputTanggal = document.getElementById('tgl_angsuran');
+        // Mendapatkan tanggal hari ini
+        var today = new Date().toISOString().slice(0, 10);
+        // Mengatur nilai default input tanggal menjadi hari ini
+        inputTanggal.value = today;
+        // Mengambil elemen-elemen yang diperlukan
         var selectPinjaman = document.querySelector('select[name="nama_id"]');
+        var inputSisaAngsuran = document.getElementById('sisa_angsuran');
+        var inputJumlahBayar = document.getElementById('jml_bayar');
         // Mendengarkan perubahan pada select
         selectPinjaman.addEventListener('change', function() {
             // Mengambil nilai total dari pinjaman yang dipilih
             var selectedOption = selectPinjaman.options[selectPinjaman.selectedIndex];
-            var total = selectedOption.dataset.total;
+            var total = parseFloat(selectedOption.dataset.total);
             // Mengisi nilai total ke dalam input sisa_angsuran
-            document.getElementById('sisa_angsuran').value = total;
+            inputSisaAngsuran.value = total.toFixed(2);
+        });
+        // Mendengarkan perubahan pada input jumlah bayar
+        inputJumlahBayar.addEventListener('input', function() {
+            // Mengambil nilai sisa angsuran dan jumlah bayar
+            var sisaAngsuran = parseFloat(inputSisaAngsuran.value);
+            var jumlahBayar = parseFloat(inputJumlahBayar.value);
+            // Menghitung dan menetapkan nilai sisa angsuran setelah pembayaran
+            var sisaSetelahBayar = sisaAngsuran - jumlahBayar;
+            // Menetapkan nilai sisa angsuran ke dalam input sisa_angsuran
+            inputSisaAngsuran.value = sisaSetelahBayar.toFixed(2);
         });
     });
 </script>
