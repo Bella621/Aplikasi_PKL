@@ -82,6 +82,9 @@
                                                 </div>
                                             </div>
                                         </form>
+                                        <div class="col-12">
+                                            <button class="btn btn-block btn-gradient waves-effect waves-light" onclick="history.go(-1);">kembali</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

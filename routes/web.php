@@ -18,7 +18,7 @@ Auth::routes();
 
 // Route untuk halaman publik
 Route::get('/', [App\Http\Controllers\HomePublicController::class, 'index'])->name('homePublic');
-Route::get('/', [App\Http\Controllers\HomePublicController::class, 'search'])->name('homePublic.search');
+Route::get('/search', [App\Http\Controllers\HomePublicController::class, 'search'])->name('homePublic.search');
 
 
 // Grup route yang membutuhkan autentikasi
@@ -41,6 +41,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/angsuran/{id}', [AngsuranController::class, 'destroy'])->name('angsuran.destroy');
     Route::post('/angsuran/store', [App\Http\Controllers\AngsuranController::class, 'store'])->name('angsuran.store');
     Route::get('/laporan', [App\Http\Controllers\LaporanController::class, 'index'])->name('laporan');
+    Route::post('/laporan/print', [App\Http\Controllers\LaporanController::class, 'printIndex'])->name('laporan.printIndex');
     Route::get('/laporan/total_angsuran', [App\Http\Controllers\LaporanController::class, 'total_angsuran'])->name('laporan.total_angsuran');
     Route::get('/logout', function(){
         \Auth::logout();

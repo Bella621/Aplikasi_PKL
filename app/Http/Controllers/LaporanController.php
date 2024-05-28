@@ -16,66 +16,114 @@ class LaporanController extends Controller
      */
     public function index(Request $request)
     {
-        $pinjamen = Pinjaman::all();
-        $jml_pinjaman = 0;
-        $jml_peminjam = 0;
-
-        if (!empty($request->input('date_start')) && !empty($request->input('date_end'))) {
-            $jml_pinjaman = DB::table('pinjamen')->whereBetween('created_at', [
-                $request->input('date_start').' 00:00:00',
-                $request->input('date_end').' 23:59:59'
-            ])->sum('pinjamen.total');
-
-            $jml_peminjam = DB::table('pinjamen')->whereBetween('created_at', [
-                $request->input('date_start').' 00:00:00',
-                $request->input('date_end').' 23:59:59'
-            ])->count('*');
-
-            // dd($jml_peminjam);
-        } else {
-            $jml_pinjaman = DB::table('pinjamen')->sum('pinjamen.total');
-            $jml_peminjam = DB::table('pinjamen')->count('*');
+        $dateStart = $request->input('date_start');
+        $dateEnd = $request->input('date_end');
+    
+        $pinjamen = Pinjaman::query();
+    
+        if ($dateStart && $dateEnd) {
+            // Filter berdasarkan rentang tanggal
+            $pinjamen->whereBetween('tgl_ambil', [$dateStart, $dateEnd]);
         }
-
+    
+        $pinjamen = $pinjamen->get();
+    
+        // Hitung jumlah pinjaman dan jumlah peminjam berdasarkan data yang difilter
+        $jml_pinjaman = $pinjamen->sum('total');
+        $jml_peminjam = $pinjamen->count();
+    
         return view('laporan.index', [
-            'pinjamen'=>$pinjamen,
-            'request'=> $request,
+            'pinjamen' => $pinjamen,
+            'request' => $request,
             'jml_pinjaman' => $jml_pinjaman,
             'jml_peminjam' => $jml_peminjam,
         ]);
     }
+
     public function total_angsuran(Request $request)
+{
+    $dateStart = $request->input('date_start');
+    $dateEnd = $request->input('date_end');
+
+    $angsurans = Angsuran::query();
+
+    if ($dateStart && $dateEnd) {
+        // Filter berdasarkan rentang tanggal
+        $angsurans->whereBetween('created_at', [
+            $dateStart . ' 00:00:00',
+            $dateEnd . ' 23:59:59'
+        ]);
+    }
+
+    $angsurans = $angsurans->get();
+
+    // Hitung jumlah pengansur dan total bayar berdasarkan data yang difilter
+    $jml_pengansur = $angsurans->count();
+    $jml_bayar = $angsurans->sum('jml_bayar');
+
+    return view('laporan.total_angsuran', [
+        'angsurans' => $angsurans,
+        'request' => $request,
+        'jml_pengansur' => $jml_pengansur,
+        'jml_bayar' => $jml_bayar,
+    ]);
+}
+    
+    public function printIndex(Request $request)
     {
-        
-        $jml_pengansur = 0;
-        $jml_bayar = 0;
-        $angsurans = Angsuran::all();
-
-        if (!empty($request->input('date_start')) && !empty($request->input('date_end'))) {
-            $jml_bayar = DB::table('angsurans')->whereBetween('created_at', [
-                $request->input('date_start').' 00:00:00',
-                $request->input('date_end').' 23:59:59'
-            ])->sum('angsurans.jml_bayar');
-
-            $jml_pengansur = DB::table('angsurans')->whereBetween('created_at', [
-                $request->input('date_start').' 00:00:00',
-                $request->input('date_end').' 23:59:59'
-            ])->count('*');
-
-            // dd($jml_peminjam);
-        } else {
-            $jml_bayar = DB::table('angsurans')->sum('angsurans.jml_bayar');
-            $jml_pengansur = DB::table('angsurans')->count('*');
+        $dateStart = $request->input('date_start');
+        $dateEnd = $request->input('date_end');
+    
+        $pinjamen = Pinjaman::query();
+    
+        if ($dateStart && $dateEnd) {
+            // Filter berdasarkan rentang tanggal
+            $pinjamen->whereBetween('tgl_ambil', [$dateStart, $dateEnd]);
         }
-
-
-
-        return view('laporan.total_angsuran', [
-            'angsurans' =>$angsurans,
-            'request'=> $request,
+    
+        $pinjamen = $pinjamen->get();
+    
+        // Hitung jumlah pinjaman dan jumlah peminjam berdasarkan data yang difilter
+        $jml_pinjaman = $pinjamen->sum('total');
+        $jml_peminjam = $pinjamen->count();
+    
+        return view('laporan.printIndex', [
+            'date_start' => $dateStart,
+            'date_end' => $dateEnd,
+            'pinjamen' => $pinjamen,
+            'request' => $request,
+            'jml_pinjaman' => $jml_pinjaman,
+            'jml_peminjam' => $jml_peminjam,
+        ]);
+    }
+    
+    public function printTotalAngsuran(Request $request)
+    {
+        $dateStart = $request->input('date_start');
+        $dateEnd = $request->input('date_end');
+    
+        $angsurans = Angsuran::query();
+    
+        if ($dateStart && $dateEnd) {
+            // Filter berdasarkan rentang tanggal
+            $angsurans->whereBetween('created_at', [
+                $dateStart . ' 00:00:00',
+                $dateEnd . ' 23:59:59'
+            ]);
+        }
+    
+        $angsurans = $angsurans->get();
+    
+        // Hitung jumlah pengansur dan total bayar berdasarkan data yang difilter
+        $jml_pengansur = $angsurans->count();
+        $jml_bayar = $angsurans->sum('jml_bayar');
+    
+        return view('laporan.printTotalAngsuran', [
+            'angsurans' => $angsurans,
+            'request' => $request,
             'jml_pengansur' => $jml_pengansur,
             'jml_bayar' => $jml_bayar,
         ]);
     }
-    
+
 }

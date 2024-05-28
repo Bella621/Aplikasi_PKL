@@ -11241,3 +11241,15 @@ body {
   font-size: 0.75rem;
   border-radius: 0.375rem !important;
 }
+
+.back-button {
+  background-color: #e81515 !important;
+  background: linear-gradient(to top, #5d6dc3, #3c86d8) !important;
+  box-shadow: 0 0 24px 0 rgba(0, 0, 0, 0.15), 0 1px 0 0 rgba(0, 0, 0, 0.1);
+  color: #ffffff !important; }
+
+.back-button:hover {
+  background-color: #f0f0f0; /* Warna latar belakang saat dihover */
+  color: #555555; /* Warna teks saat dihover */
+}
+

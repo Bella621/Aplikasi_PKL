@@ -1085,6 +1085,16 @@ a:focus {
 /* =============
    Buttons
 ============= */
+.btn-red {
+  background-color: #e81515 !important;
+  background: linear-gradient(to top, #e25839, #ff2600) !important;
+  box-shadow: 0 0 24px 0 rgba(0, 0, 0, 0.15), 0 1px 0 0 rgba(0, 0, 0, 0.1);
+  color: #ffffff !important; }
+  
+  .btn-red.focus, .btn-red:focus {
+    box-shadow: 0 0 0 2px rgba(60, 134, 216, 0.5); }
+  
+
 .btn {
   border-radius: 2px;
   font-size: 15px;
@@ -3648,6 +3658,10 @@ h3.timeline-title {
     display: none; }
 
   .user-list .user-list-item .user-desc {
-    margin-left: 0; } }
+    margin-left: 0; } 
+  
+  }
+
+    
 
 /*# sourceMappingURL=style.css.map */
