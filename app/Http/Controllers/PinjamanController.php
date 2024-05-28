@@ -50,10 +50,13 @@ class PinjamanController extends Controller
        // ]);
         
         $nama = Anggota::where('id', $request->nama_id)->value('nama');
+        $nik = Anggota::where('id', $request->nama_id)->value('nik');
 
         // Buat dan simpan anggota baru
         $pinjamen = new Pinjaman();
         $pinjamen->nama = $nama;
+        $pinjamen->nik=$nik;
+        $pinjamen->barang = $request->barang;
         $pinjamen->tgl_ambil = $request->tgl_ambil;
         $pinjamen->harga_barang = $request->harga_barang;
         $pinjamen->bunga = $request->bunga;

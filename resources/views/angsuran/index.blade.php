@@ -12,6 +12,8 @@
             <tr>
                 <th>No</th>
                 <th>Nama</th>
+                <th>NIK</th>
+                <th>Nama Barang</th>
                 <th>Sisa Angsuran</th>
                 <th>Tgl Transaksi</th>
                 <th>Jml Bayar</th>
@@ -23,6 +25,8 @@
             <tr>
                 <td>{{ $key + 1 }}</td>
                 <td>{{ $angsuran->nama }}</td>
+                <td>{{ $angsuran->nik }}</td>
+                <td>{{ $angsuran->barang}}</td>
                 <td>Rp {{ number_format($angsuran->sisa_angsuran  , 0, ',', '.') }}</td>
                 <td>{{ $angsuran->tgl_angsuran }}</td>
                 <td> Rp {{ number_format($angsuran->jml_bayar , 0, ',', '.') }}</td>

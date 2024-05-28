@@ -12,6 +12,7 @@
             <tr>
                 <th>No</th>
                 <th>Nama</th>
+                <th>Nama Barang</th>
                 <th>Tgl Ambil</th>
                 <th>Harga Barang</th>
                 <th>Bunga</th>
@@ -26,6 +27,7 @@
             <tr>
                 <td>{{ $key + 1 }}</td>
                 <td>{{ $pinjaman->nama }}</td>
+                <td>{{ $pinjaman->barang }}</td>
                 <td>{{ $pinjaman->tgl_ambil }}</td>
                 <td> Rp {{ number_format($pinjaman->harga_barang , 0, ',', '.') }}</td>
                 <td>{{ $pinjaman->bunga }}</td>

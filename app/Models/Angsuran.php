@@ -9,10 +9,11 @@ class Angsuran extends Model
 {
     use HasFactory;
     protected $fillabel =[
-        'nama', 
+        'nama',
+        'nik',
+        'barang', 
         'sisa_angsuran',
         'tgl_angsuran',
         'jml_bayar',
-       
     ];
 }

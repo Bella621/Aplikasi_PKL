@@ -51,11 +51,14 @@ class AngsuranController extends Controller
         //     // Tambahkan validasi lainnya sesuai kebutuhan
         // ]);
         $nama = Pinjaman::where('id', $request->nama_id)->value('nama');
-        $total = Pinjaman::where('id')->value('total');
+        $nik = Pinjaman::where('id', $request->nama_id)->value('nik');
+        $barang = Pinjaman::where('id', $request->nama_id)->value('barang');
 
         // Buat dan simpan 
         $angsurans = new Angsuran();
         $angsurans->nama = $nama;
+        $angsurans->nik = $nik;
+        $angsurans->barang = $barang;
         $angsurans->tgl_angsuran = $request->tgl_angsuran;
         $angsurans->jml_bayar = $request->jml_bayar;
         $angsurans->sisa_angsuran = $request->sisa_angsuran;

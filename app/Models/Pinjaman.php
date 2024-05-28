@@ -10,6 +10,8 @@ class Pinjaman extends Model
     use HasFactory;
     protected $fillabel =[
         'nama',
+        'nik',
+        'barang',
         'tgl_ambil',
         'harga_barang',
         'bunga',
