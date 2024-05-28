@@ -42,32 +42,30 @@ class AngsuranController extends Controller
      */
     public function store(Request $request)
     {
-        // Validasi input
-        // $validatedData = $request->validate([
-        //     'nama' => 'required', // 
-        //     'tgl_angsuran' => 'required',
-        //     'jml_bayar' => 'required',
-        //     'sisa_angsuran' => 'required',
-        //     // Tambahkan validasi lainnya sesuai kebutuhan
-        // ]);
         $nama = Pinjaman::where('id', $request->nama_id)->value('nama');
         $nik = Pinjaman::where('id', $request->nama_id)->value('nik');
         $barang = Pinjaman::where('id', $request->nama_id)->value('barang');
-
-        // Buat dan simpan 
-        $angsurans = new Angsuran();
-        $angsurans->nama = $nama;
-        $angsurans->nik = $nik;
-        $angsurans->barang = $barang;
-        $angsurans->tgl_angsuran = $request->tgl_angsuran;
-        $angsurans->jml_bayar = $request->jml_bayar;
-        $angsurans->sisa_angsuran = $request->sisa_angsuran;
+    
+        // Buat dan simpan data angsuran baru
+        $angsuran = new Angsuran();
+        $angsuran->nama = $nama;
+        $angsuran->nik = $nik;
+        $angsuran->barang = $barang;
+        $angsuran->tgl_angsuran = $request->tgl_angsuran;
+        $angsuran->jml_bayar = $request->jml_bayar;
+        $angsuran->sisa_angsuran = $request->sisa_angsuran;
         // Tambahkan atribut lainnya sesuai kebutuhan
-        $angsurans->save();
-
+        $angsuran->save();
+    
+        // Update sisa angsuran pada pinjaman terkait
+        $pinjaman = Pinjaman::findOrFail($request->nama_id);
+        $pinjaman->sisa_angsuran -= $request->jml_bayar;
+        $pinjaman->save();
+    
         // Redirect ke halaman yang sesuai dengan pesan sukses
         return redirect()->route('angsuran')->with('success', 'Data berhasil ditambahkan.');
     }
+    
 
     /**
      * Display the specified resource.

@@ -72,6 +72,13 @@
             nikInput.value = selectedOption.getAttribute('data-nik');
         });
 
+        // Mengambil elemen input tanggal
+        var inputTanggal = document.getElementById('tgl_ambil');
+        // Mendapatkan tanggal hari ini
+        var today = new Date().toISOString().slice(0, 10);
+        // Mengatur nilai default input tanggal menjadi hari ini
+        inputTanggal.value = today;
+
         document.querySelector('[name="harga_barang"]').addEventListener('input', function () {
             const harga_barang = Number(document.querySelector('[name="harga_barang"]').value);
             const bunga = Number(document.querySelector('[name="bunga"]').value);

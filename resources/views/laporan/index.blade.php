@@ -24,6 +24,16 @@
             <button type="submit" class="btn btn-primary">Cari</button>
         </div>
     </form>
+    @if($jml_peminjam !== 0)
+    <form action="{{ route('laporan.printIndex') }}" method="POST" enctype="multipart/form-data" target="_blank">
+        @csrf
+        @method('POST')
+        <input type="hidden" name="date_start" value="{{ $request->input('date_start') ?? '' }}">
+        <input type="hidden" name="date_end" value="{{ $request->input('date_end') ?? '' }}">
+        <button type="submit" class="btn btn-primary btn-sm mt-2"><i class="fas fa-print"></i> Cetak Laporan</button>
+    </form>
+    @endif
+ 
     <div class="container">
         <hr />
         <table class="table table-hover">
@@ -36,7 +46,8 @@
                     <th>Bunga</th>
                     <th>Total</th>
                     <th>Jml Angsuran</th>
-                    <th>Angsuran</th>
+                    <th>Angsuran per minggu</th>
+                    <th>Sisa Angsuran</th>
                 </tr>
             </thead>
             <tbody>
@@ -50,6 +61,7 @@
                     <td>Rp {{ number_format($pinjaman->total , 0, ',', '.') }}</td>
                     <td>{{ $pinjaman->jml_angsuran }}</td>
                     <td>Rp {{ number_format($pinjaman->angsuran , 0, ',', '.') }}</td>
+                    <td>Rp {{ number_format($pinjaman->sisa_angsuran , 0, ',', '.') }}</td>
                 </tr>
                 @endforeach
             </tbody>
@@ -65,5 +77,6 @@
         <!-- <label for="colFormLabel" class="col-sm-2 col-form-label"></label> -->
         <td>Jumlah Pinjaman: Rp {{ number_format($jml_pinjaman, 0, ',', '.') }}</td>
     </div>
+    
 </div>
 @endsection

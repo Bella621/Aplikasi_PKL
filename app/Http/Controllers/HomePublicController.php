@@ -13,11 +13,10 @@ class HomePublicController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $pinjamen = Pinjaman::all();
-        return view('homePublic',compact('pinjamen'));
     }
+    
 
     /**
      * Show the form for creating a new resource.
@@ -36,19 +35,21 @@ class HomePublicController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function search(Request $request)
-{
-    $keyword = $request->input('keyword');
-    $pinjamen = Pinjaman::where('nama', 'LIKE', "%$keyword%")
-                        ->orWhere('tgl_ambil', 'LIKE', "%$keyword%")
-                        ->orWhere('harga_barang', 'LIKE', "%$keyword%")
-                        ->orWhere('bunga', 'LIKE', "%$keyword%")
-                        ->orWhere('total', 'LIKE', "%$keyword%")
-                        ->orWhere('jml_angsuran', 'LIKE', "%$keyword%")
-                        ->orWhere('angsuran', 'LIKE', "%$keyword%")
-                        ->get();
-
-    return view('homePublic', compact('pinjamen'));
-}
+    {
+        $keyword = $request->query('keyword');
+    
+        if ($keyword) {
+            $pinjamen = Pinjaman::where('nik', 'LIKE', "%$keyword%")->get();
+    
+            if ($pinjamen->isEmpty()) {
+                return view('homePublic')->with('error', 'NIK yang Anda inputkan salah.');
+            }
+        } else {
+            $pinjamen = [];
+        }
+    
+        return view('homePublic', compact('pinjamen'));
+    }
 
 
     /**

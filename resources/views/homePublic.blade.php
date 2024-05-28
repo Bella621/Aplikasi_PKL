@@ -10,6 +10,7 @@
         </form>
     </div>
     <hr />
+    @if(!empty($pinjamen))
     <table class="table table-hover">
         <thead class="table-primary">
             <tr>
@@ -20,6 +21,7 @@
                 <th>Bunga</th>
                 <th>Total</th>
                 <th>Jml Angsuran</th>
+                <th>Angsuran per minggu</th>
                 <th>Sisa Angsuran</th>
             </tr>
         </thead>
@@ -35,10 +37,13 @@
                 <!-- <td>{{ $pinjaman->total }}</td> -->
                 <td>{{ $pinjaman->jml_angsuran }}</td>
                 <td>Rp {{ number_format($pinjaman->angsuran, 0, ',', '.') }}</td>
-                <!-- <td>{{ $pinjaman->angsuran }}</td> -->
+                <td>Rp {{ number_format($pinjaman->sisa_angsuran , 0, ',', '.') }}</td>
             </tr>
             @endforeach
         </tbody>
     </table>
+    @else
+    <p>Silahkan masukkan NIK untuk melakukan pencarian.</p>
+    @endif
 </div>
 @endsection
