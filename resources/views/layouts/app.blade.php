@@ -28,7 +28,7 @@
             @else
                 <a class="navbar-brand" href="{{ url('/') }}">
             @endif
-                <img src="{{ asset('assets/images/kasbon.png') }}" style="max-height: 100px; max-width: 160px;">
+                <img src="{{ asset('assets/images/logo123.png') }}" style="max-height: 100px; max-width: 160px;">
             </a>
 
 

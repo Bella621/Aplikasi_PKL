@@ -18,7 +18,7 @@ Auth::routes();
 
 // Route untuk halaman publik
 Route::get('/', [App\Http\Controllers\HomePublicController::class, 'index'])->name('homePublic');
-Route::get('/', [App\Http\Controllers\HomePublicController::class, 'search'])->name('homePublic.search');
+Route::get('/search', [App\Http\Controllers\HomePublicController::class, 'search'])->name('homePublic.search');
 
 
 // Grup route yang membutuhkan autentikasi

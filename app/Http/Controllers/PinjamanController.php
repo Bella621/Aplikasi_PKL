@@ -37,20 +37,7 @@ class PinjamanController extends Controller
      */
     public function store(Request $request)
     {
-         // Validasi input
-        // $validatedData = $request->validate([
-        //    'nama_id' => 'required', // Sesuaikan dengan aturan validasi yang diperlukan
-        //    'tgl_ambil' => 'required',
-        //    'harga_barang' => 'required',
-        //    'bunga' => 'required',
-        //    'total' => 'required',
-        //    'jml_angsuran' => 'required',
-        //    'angsuran' => 'required',
-            // Tambahkan validasi lainnya sesuai kebutuhan
-       // ]);
-        
         $nama = Anggota::where('id', $request->nama_id)->value('nama');
-
         // Buat dan simpan anggota baru
         $pinjamen = new Pinjaman();
         $pinjamen->nama = $nama;

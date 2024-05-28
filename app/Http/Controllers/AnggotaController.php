@@ -42,28 +42,37 @@ class AnggotaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        // Validasi input
-        $validatedData = $request->validate([
-            'nik' => 'required|unique:anggotas', // Sesuaikan dengan aturan validasi yang diperlukan
-            'nama' => 'required',
-            'alamat' => 'required',
-            'no_hp' => 'required',
-            // Tambahkan validasi lainnya sesuai kebutuhan
-        ]);
+{
+    // Validate input
+    $validatedData = $request->validate([
+        'nik' => 'required|digits:16|unique:anggotas',
+        'nama' => 'required',
+        'alamat' => 'required',
+        'no_hp' => 'required|regex:/^62\d+$/', // Ensure no_hp starts with '62'
+    ], [
+        'nik.digits' => 'NIK harus terdiri dari 16 angka.',
+        'nik.unique' => 'NIK sudah terdaftar, tidak bisa input data karena NIK sudah ada.',
+        'no_hp.regex' => 'No HP harus diawali dengan 62.',
+    ]);
 
-        // Buat dan simpan anggota baru
+    try {
+        // Create and save new anggota
         $anggota = new Anggota();
         $anggota->nik = $request->nik;
         $anggota->nama = $request->nama;
         $anggota->alamat = $request->alamat;
         $anggota->no_hp = $request->no_hp;
-        // Tambahkan atribut lainnya sesuai kebutuhan
         $anggota->save();
 
-        // Redirect ke halaman yang sesuai dengan pesan sukses
+        // Redirect to appropriate page with success message
         return redirect()->route('anggota')->with('success', 'Anggota berhasil ditambahkan.');
+    } catch (\Exception $e) {
+        // Handle error, maybe log it
+        return redirect()->route('anggota.create')->with('error', 'Gagal menambahkan anggota: ' . $e->getMessage());
     }
+}
+    
+    
 
     /**
      * Display the specified resource.
